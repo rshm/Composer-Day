@@ -26,7 +26,42 @@ In the `terraform` subfolder of this repo, there is some boilerplate code to get
 
 Your task, if you choose to accept it - change your working directory to the `terraform` subdirectory, make the appropriate changes to source files there, and try to use it to deploy your second Cloud Composer instance.
 
+
+Useful commands in terraform:
+- “terraform init”
+- “terraform plan” 
+- “terraform apply”
+- [Optional] “terraform refresh” [[docs]](https://developer.hashicorp.com/terraform/cli/commands/refresh)
+
+
+Useful documentation:
+- [Create environments with Terraform | Cloud Composer](https://cloud.google.com/composer/docs/composer-2/terraform-create-environments)
+- [google_composer_environment | Resources | hashicorp/google | Terraform](https://registry.terraform.io/providers/hashicorp/google/latest/docs/resources/composer_environment)
+
 ### Lab 2: Setup CI/CD pipeline on deployed DAG
+For this lab, we would want create a CI/CD pipeline, using your own GitHub account, to automate the testing and deployment of DAGs to the Cloud Composer environment.
+
+In the `dags` folder, there is one dag, named `first_dag.py`. As described above, this DAG is performing some boilerplate operations.
+
+As a first step, you could try to deploy the dag manually, using the command:
+```bash
+gcloud composer environments storage dags import \
+    --environment <YOUR_ENVIRONMENT_NAME> \
+    --location <LOCATION> \
+    --source <RELATIVE_PATH_TO_DAG>
+```
+**Note 1**: LOCATION should be `us-central1` in this workshop, unless you changed it. You can verify all the required details missingby running:
+```bash
+gcloud composer environments list --locations us-central1
+```
+
+**Note 2**: This command is merly copying the python DAG file to the associated Cloud Storage bucket. That is important do understand while building your CI/CD pipeline.
+
+To start implementing the CI/CD pipeline based on your GitHub repository, you can consult the official published example repository 
+
+
+
+
 
 ### Lab 3: Modify the test DAG to use secret manager and BQ
 
