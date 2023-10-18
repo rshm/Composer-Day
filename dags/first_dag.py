@@ -118,7 +118,7 @@ with models.DAG(
         task_id="aggregate_streets_to_csv",
         source_project_dataset_table=f"{project_id}.{target_dataset_name}.{target_table_name}_{{{{ params.business_datetime }}}}",
         destination_cloud_storage_uris=[csv_output_file],
-        export_format="CSV",
+        export_format="CSV", 
     )
 
     aggregate_streets_to_avro = bigquery_to_gcs.BigQueryToGCSOperator(
@@ -129,7 +129,8 @@ with models.DAG(
     )
 
     this_is_the_end = python_operator.PythonOperator(
-        task_id="goodbye", python_callable=greeting
+        task_id="goodbye",
+        python_callable=greeting,
     )
 
 
