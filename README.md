@@ -60,9 +60,37 @@ gcloud composer environments list --locations us-central1
 To start implementing the CI/CD pipeline based on your GitHub repository, you can consult the official published example repository 
 
 
+#### Goals for this lab:
+- Use the provisioned composer instance from lab 2 to setup a CI/CD pipeline with cloud build and your github repository
+- Refer to [https://cloud.google.com/composer/docs/dag-cicd-integration-guide](https://cloud.google.com/composer/docs/dag-cicd-integration-guide) to setup your CI/CD architecture
+- Link your github repository to cloud build
+    - Navigate to cloud build menu and click on create trigger to get started
+- Configure 2 triggers
+    - Create the Cloud Build trigger for the presubmit check
+        - CI -> when a PR is created to main branch tests are built
+        - For the unit test use the provided test [[guide]](https://cloud.google.com/composer/docs/dag-cicd-integration-guide#builder-yaml-presubmit)
+    - Create the Cloud Build trigger for DAG sync job 
+        - CD ->  DAGs folder in GCS updated when changes merged to main branch 
+        - The [[dags-utility]](https://cloud.google.com/composer/docs/dag-cicd-integration-guide#dags-utility) python file contains the logics for uploading local DAGs to composer DAGs folder
+- Test both triggers are successful 
 
+
+**Bonus Points** - change the deployment script to create a subfolder structure under the main `dags` folder, so in a real-world use-case each team that creates a flow, can have their flow deployed to their own subfolder (someone said `namespaces` for flows?).
 
 
 ### Lab 3: Modify the test DAG to use secret manager and BQ
+
+In this lab we will connect [Google Cloud Secret Manager](https://cloud.google.com/secret-manager), a secure and convenient storage system for API keys, passwords, certificates, and other sensitive data, to our Cloud Composer instance, so any code running in Cloud Composer can make use of the secrets managed by Secret Manager.
+
+While Apache Airflow offers a built in variable storage for you to use out of the box, it is not really secure, and very difficult to share secrets with other parts of your cloud infrastructure. The benefits of using Secret Manager to hold sensative data for you, and connecting it to Cloud Composer are that DAG developers don't have to access and be exposed to sensative data while developing, keeping the secret values safe and secure, while these secrets are re-usable with other cloud resources. 
+
+Useful resources:
+- [Configure Secret Manager for your environment](https://cloud.google.com/composer/docs/composer-2/configure-secret-manager#gcloud)
+- [Override Airflow configuration options](https://cloud.google.com/composer/docs/composer-2/override-airflow-configurations)
+- [Creating a secret in Secret Manager](https://cloud.google.com/secret-manager/docs/creating-and-accessing-secrets)
+
+The simplest way to see this in action, is to modify one of your steps to use a variable (that will be read from Secret Manager).
+
+For example, consider changing the last python step: 
 
 ### Lab 4: [Time Permitting] Adapt the CI/CD pipeline to deploy changes to a Custom Operator
