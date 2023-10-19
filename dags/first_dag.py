@@ -30,7 +30,7 @@ from airflow.utils import trigger_rule
 target_dataset_name = "greenhat_summary"
 target_table_name = "readings_by_street"
 location = "us-central1"
-project_id = "composer-workshop"
+project_id = "qwiklabs-gcp-03-3cbcd8eb2977"
 gcs_bucket = "{{params.output_gcs_bucket}}"
 csv_output_file = f"gs://{gcs_bucket}/street_readings.csv"
 avro_output_file = f"gs://{gcs_bucket}/street_readings.avro"
