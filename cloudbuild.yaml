@@ -15,7 +15,7 @@ steps:
 
   - name: python
     entrypoint: python
-    args: ["utils/add_dags_to_composer.py", "--dags_directory=dags/", "--dags_bucket=us-central1-testgcp-96adf76a-bucket"]
+    args: ["dags/add_dags_to_composer.py", "--dags_directory=dags/", "--dags_bucket=us-central1-testgcp-96adf76a-bucket"]
 
   # run in python 3.8 which is latest version in Cloud Composer
   - name: python:3.8-slim
