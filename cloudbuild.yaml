@@ -1,13 +1,10 @@
 steps:
-  - name: python:3.8-slim
+  # install dependencies
+  - name: python
     entrypoint: pip
-    args: ["install", "-r", "requirements.txt", "-c", "constraints.txt", "--user"]
+    args: ["install", "-r", "utils/requirements.txt", "--user"]
 
-  - name: python:3.8-slim
-    entrypoint: pip
-    args: ["install", "-r", "requirements-test.txt", "--user"]
-
-  # run in python 3.8 which is latest version in Cloud Composer
-  - name: python:3.8-slim
-    entrypoint: python3.8
-    args: ["-m", "pytest", "-s", "dags/"]
+  # run
+  - name: python
+    entrypoint: python
+    args: ["utils/add_dags_to_composer.py", "--dags_directory=${_DAGS_DIRECTORY}", "--dags_bucket=${_DAGS_BUCKET}"]

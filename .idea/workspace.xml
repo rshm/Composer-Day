@@ -35,6 +35,9 @@
     <key name="CopyFile.RECENT_KEYS">
       <recent name="$PROJECT_DIR$" />
     </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="$PROJECT_DIR$/dags" />
+    </key>
   </component>
   <component name="RunManager">
     <configuration name="setup-bq-data.sh" type="ShConfigurationType" temporary="true">
