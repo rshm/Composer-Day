@@ -91,6 +91,40 @@ Useful resources:
 
 The simplest way to see this in action, is to modify one of your steps to use a variable (that will be read from Secret Manager).
 
-For example, consider changing the last python step: 
+For example, consider changing the last python step from this:
+```python
+this_is_the_end = python_operator.PythonOperator(
+        task_id="goodbye", 
+        python_callable=greeting,
+    )
+```
+To this:
+```python
+this_is_the_end = python_operator.PythonOperator(
+        task_id="goodbye", 
+        provide_context=True,
+        python_callable=greeting,
+        op_kwargs={'name': '{{ var.value.name }}'},
+    )
+```
 
 ### Lab 4: [Time Permitting] Adapt the CI/CD pipeline to deploy changes to a Custom Operator
+
+**Congrats for making it this far**
+
+For this challenge we want to take our flow the last step and have it use repeatable custom logic that you can encapsulate in a custom operator. As a Data Platform team, it is your job to make sure other teams in your organization can work in *Congruence* without too much friction. So abstracting away from them as many technical details as possible, allowing them to focus on buisness specific logic. 
+
+Your Goals:
+- Manually install the given RGCustomOperator provided to you with the starter code using the gcloud command:
+```bash
+gcloud composer environments storage plugins import \
+    --environment <YOUR_ENVIRONMENT_NAME> \
+    --location <LOCATION> \
+    --source <RELATIVE_PATH_TO_PLUGIN_FILE>
+```
+- Adapt your DAG to use the RGCustomOperator
+- Adapt your CI/CD pipeline to copy also deploy plugins and not just DAGs
+    - Modify utilities script and merge-to-main trigger 
+    - Test your CI/CD pipeline by changing the log message in the RGCustomOperator code
+
+**Note** that it can 2-3 minutes for the new operator changes to reflect
