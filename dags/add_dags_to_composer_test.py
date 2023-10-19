@@ -99,6 +99,6 @@ def test_upload_dags_to_composer_no_name_override(test_bucket: str) -> None:
 def test_upload_dags_to_composer(
         test_bucket: str, capsys: pytest.CaptureFixture
 ) -> None:
-    add_dags_to_composer.upload_dags_to_composer(DAGS_DIR, test_bucket, "../dags/")
+    add_dags_to_composer.upload_dags_to_composer(DAGS_DIR, test_bucket, "dags/")
     out, _ = capsys.readouterr()
     assert "uploaded" in out
